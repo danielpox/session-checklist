@@ -12,10 +12,10 @@ export default function CreateItemInput ({ handleCreate }: ICreateItemInputProps
   }
 
   function onSubmit (event: React.FormEvent) {
-    event.preventDefault()
-
     handleCreate(text)
     setText('')
+
+    event.preventDefault()
   }
 
   return (

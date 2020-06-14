@@ -3,12 +3,11 @@ import * as React from 'react'
 import ListItem, { IListItem } from './ListItem'
 import CreateItemInput from './CreateItemInput'
 
-interface ICheckListProps {
-  items: IListItem[]
-}
+import { useStickyState } from './hooks'
+import { sessionStorageKey } from './storage'
 
-export default function CheckList ({ items }: ICheckListProps) {
-  const [ listItems, setListItems ] = React.useState<IListItem[]>(items)
+export default function CheckList () {
+  const [ listItems, setListItems ] = useStickyState([], sessionStorageKey)
   
   function handleCheck (id: string) {
     const newListItems = listItems.map(listItem => {
