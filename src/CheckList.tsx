@@ -9,7 +9,7 @@ interface ICheckListProps {
 export default function CheckList ({ items }: ICheckListProps) {
   const [ listItems, setListItems ] = React.useState<IListItem[]>(items)
   
-  function handleClick (id: string) {
+  function handleCheck (id: string) {
     const newListItems = listItems.map(listItem => {
       if (listItem.id === id) {
         return {
@@ -24,6 +24,12 @@ export default function CheckList ({ items }: ICheckListProps) {
     setListItems(newListItems)
   }
 
+  function handleDelete (id: string) {
+    const newListItems = listItems.filter(listItem => listItem.id !== id)
+
+    setListItems(newListItems)
+  }
+
   return (
     <ul>
       {
@@ -31,7 +37,8 @@ export default function CheckList ({ items }: ICheckListProps) {
           <ListItem
             key={ item.id }
             item={ item }
-            handleClick={ handleClick }
+            handleCheck={ handleCheck }
+            handleDelete={ handleDelete }
           />
         )
       }

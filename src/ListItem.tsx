@@ -8,12 +8,17 @@ export interface IListItem {
 
 export interface IListItemProps {
   item: IListItem
-  handleClick (id: string): void
+  handleCheck (id: string): void
+  handleDelete (id: string): void
 }
 
-export default function ListItem ({ item, handleClick }: IListItemProps) {
+export default function ListItem ({ item, handleCheck, handleDelete }: IListItemProps) {
   function onChange () {
-    handleClick(item.id)
+    handleCheck(item.id)
+  }
+
+  function onDelete () {
+    handleDelete(item.id)
   }
 
   return (
@@ -21,6 +26,7 @@ export default function ListItem ({ item, handleClick }: IListItemProps) {
       <label>
         <input type='checkbox' checked={ item.checked } onChange={ onChange } />
         <span className='text'>{ item.text }</span>
+        <button type='button' onClick={ onDelete }>&times;</button>
       </label>
     </li>
   )
