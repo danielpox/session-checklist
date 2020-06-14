@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import ListItem, { IListItem } from './ListItem'
+import CreateItemInput from './CreateItemInput'
 
 interface ICheckListProps {
   items: IListItem[]
@@ -30,18 +31,34 @@ export default function CheckList ({ items }: ICheckListProps) {
     setListItems(newListItems)
   }
 
+  function handleCreate (text: string) {
+    const listItem: IListItem = {
+      id: Date.now().toString(),
+      checked: false,
+      text
+    }
+
+    const newListItems = Array.from(listItems)
+    newListItems.push(listItem)
+
+    setListItems(newListItems)
+  }
+
   return (
-    <ul>
-      {
-        listItems.map(item =>
-          <ListItem
-            key={ item.id }
-            item={ item }
-            handleCheck={ handleCheck }
-            handleDelete={ handleDelete }
-          />
-        )
-      }
-    </ul>
+    <>
+      <ul>
+        {
+          listItems.map(item =>
+            <ListItem
+              key={ item.id }
+              item={ item }
+              handleCheck={ handleCheck }
+              handleDelete={ handleDelete }
+            />
+          )
+        }
+      </ul>
+      <CreateItemInput handleCreate={ handleCreate } />
+    </>
   )
 }
