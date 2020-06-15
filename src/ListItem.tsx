@@ -1,4 +1,6 @@
 import * as React from 'react'
+import styled from 'styled-components'
+import { Draggable } from 'react-beautiful-dnd'
 
 export interface IListItem {
   id: string
@@ -8,11 +10,14 @@ export interface IListItem {
 
 export interface IListItemProps {
   item: IListItem
+  index: number
   handleCheck (id: string): void
   handleDelete (id: string): void
 }
 
-export default function ListItem ({ item, handleCheck, handleDelete }: IListItemProps) {
+const Item = styled.li``
+
+export default function ListItem ({ item, index, handleCheck, handleDelete }: IListItemProps) {
   function onChange () {
     handleCheck(item.id)
   }
@@ -22,12 +27,16 @@ export default function ListItem ({ item, handleCheck, handleDelete }: IListItem
   }
 
   return (
-    <li>
-      <label>
-        <input type='checkbox' checked={ item.checked } onChange={ onChange } />
-        <span className='text'>{ item.text }</span>
-        <button type='button' onClick={ onDelete }>&times;</button>
-      </label>
-    </li>
+    <Draggable draggableId={ item.id } index={ index }>
+      { provided => (
+        <Item { ...provided.draggableProps } { ...provided.dragHandleProps } ref={ provided.innerRef }>
+          <label>
+            <input type='checkbox' checked={ item.checked } onChange={ onChange } />
+            <span className='text'>{ item.text }</span>
+            <button type='button' onClick={ onDelete }>&times;</button>
+          </label>
+        </Item>
+      ) }
+    </Draggable>
   )
 }
