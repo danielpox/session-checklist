@@ -10,6 +10,13 @@ import { sessionStorageKey } from './storage'
 
 const List = styled.ul``
 
+const Footer = styled.footer`
+  display: flex;
+  justify-content: space-between;
+  
+  padding: 1rem;
+`
+
 export default function CheckList () {
   const [ listItems, setListItems ] = useStickyState([], sessionStorageKey)
   
@@ -96,12 +103,14 @@ export default function CheckList () {
         </Droppable>
       </DragDropContext>
       <CreateItemInput handleCreate={ handleCreate } />
-      {
-        listItems.length > 0 && <button type='button' onClick={ handleDeleteAll }>Rensa lista</button>
-      }
-      {
-        listItems.length > 0 && <button type='button' onClick={ handleUncheckAll }>Bocka av alla</button>
-      }
+      <Footer>
+        {
+          listItems.length > 0 && <button type='button' onClick={ handleDeleteAll } className='text'>Rensa lista</button>
+        }
+        {
+          listItems.length > 0 && <button type='button' onClick={ handleUncheckAll } className='text'>Bocka av alla</button>
+        }
+      </Footer>
     </>
   )
 }
