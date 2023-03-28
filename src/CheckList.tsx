@@ -15,6 +15,10 @@ const Footer = styled.footer`
   justify-content: space-between;
   
   padding: 1rem;
+
+  button.danger {
+    color: #d00;
+  }
 `
 
 export default function CheckList () {
@@ -55,7 +59,9 @@ export default function CheckList () {
   }
 
   function handleDeleteAll () {
-    setListItems([])
+    if (window.confirm('Är du säker på att du vill radera allt i listan, så att inga saker finns kvar?')) {
+      setListItems([])
+    }
   }
 
   function handleUncheckAll () {
@@ -105,10 +111,10 @@ export default function CheckList () {
       <CreateItemInput handleCreate={ handleCreate } />
       <Footer>
         {
-          listItems.length > 0 && <button type='button' onClick={ handleDeleteAll } className='text'>Rensa lista</button>
+          listItems.length > 0 && <button type='button' onClick={ handleUncheckAll } className='text'>Bocka av alla</button>
         }
         {
-          listItems.length > 0 && <button type='button' onClick={ handleUncheckAll } className='text'>Bocka av alla</button>
+          listItems.length > 0 && <button type='button' onClick={ handleDeleteAll } className='text danger'>Radera allt i listan</button>
         }
       </Footer>
     </>
